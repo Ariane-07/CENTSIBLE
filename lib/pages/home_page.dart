@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../components/grocery_item_tile.dart';
 import '../model/cart_model.dart';
 import 'cart_page.dart';
+import 'user_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -15,53 +16,66 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xff484646),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 24.0),
+        leading: const Padding(
+          padding: EdgeInsets.only(left: 24.0),
           child: Icon(
             Icons.location_on,
-            color: Colors.grey[700],
+            color: Colors.black,
           ),
         ),
-        title: Text(
+        title: const Text(
           'Cavite, Philippines',
           style: TextStyle(
             fontSize: 16,
-            color: Colors.grey[700],
+            color: Colors.grey,
           ),
         ),
         centerTitle: false,
         actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 24.0),
-            child: Container(
-              padding: EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: Colors.grey[200],
-                borderRadius: BorderRadius.circular(12),
+          GestureDetector(
+            onTap: () => Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return const UserPage();
+                },
               ),
-              child: Icon(
-                Icons.person,
-                color: Colors.grey,
+            ),
+            child: Padding(
+              padding: const EdgeInsets.only(right: 24.0),
+              child: Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: Colors.black,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: const Icon(
+                  Icons.person,
+                  color: Colors.white,
+                ),
               ),
             ),
           ),
         ],
       ),
+
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.black,
         onPressed: () => Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) {
-              return CartPage();
+              return const CartPage();
             },
           ),
         ),
         child: const Icon(Icons.shopping_bag),
       ),
+
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -70,10 +84,16 @@ class _HomePageState extends State<HomePage> {
           // good morning bro
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 24.0),
-            child: Text('Good morning,'),
+            child: Text(
+                'Good morning,',
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.grey,
+              ),
+            ),
           ),
 
-          const SizedBox(height: 4),
+          const SizedBox(height:14),
 
           // Let's order fresh items for you
           const Padding(
@@ -87,14 +107,10 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
 
-          const SizedBox(height: 24),
-
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 24.0),
             child: Divider(),
           ),
-
-          const SizedBox(height: 24),
 
           // categories -> horizontal listview
           const Padding(
@@ -104,17 +120,18 @@ class _HomePageState extends State<HomePage> {
               style: TextStyle(
                 //fontWeight: FontWeight.bold,
                 fontSize: 18,
+                color: Colors.grey,
               ),
             ),
           ),
 
+          const SizedBox(height: 14),
           // recent orders -> show last 3
           Expanded(
             child: Consumer<CartModel>(
               builder: (context, value, child) {
                 return GridView.builder(
                   padding: const EdgeInsets.all(12),
-                  physics: const NeverScrollableScrollPhysics(),
                   itemCount: value.shopItems.length,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,

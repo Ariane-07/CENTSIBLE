@@ -7,7 +7,7 @@ class IntroPage extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[50],
+      backgroundColor: const Color(0xff484646),
       body: SafeArea(
         child: Column(
           children: [
@@ -16,38 +16,36 @@ class IntroPage extends StatelessWidget{
               padding: const EdgeInsets.only(
                 left: 100.0,
                 right: 100.0,
-                top: 120,
-                bottom: 20,
+                top: 100,
+                bottom: 10,
               ),
-              child: Image.asset('lib/images/avocado.png'),
+              child: Image.asset('lib/images/cart.png'),
             ),
 
             // we deliver groceries at your doorstep
             const Padding(
-              padding: EdgeInsets.all(28.0),
+              padding: EdgeInsets.all(24.0),
               child: Text(
-                "We deliver groceries at your doorstep",
+                "CENTSIBLE CART",
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: 35,
+                  fontSize: 50,
                   fontWeight: FontWeight.bold,
                 ),
               ),
             ),
 
             // grocery gives you fresh vegetables and fruits
-            Text(
+            const Text(
               'Fresh items everyday',
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: 16,
-                color: Colors.grey[700],
+                fontSize: 18,
+                color: Colors.white,
               ),
             ),
 
             const SizedBox(height: 24),
-
-            const Spacer(),
 
             // get started button
             GestureDetector(
@@ -55,7 +53,7 @@ class IntroPage extends StatelessWidget{
                 context,
                 MaterialPageRoute(
                   builder: (context) {
-                    return HomePage();
+                    return const HomePage();
                   },
                 ),
               ),
@@ -63,14 +61,14 @@ class IntroPage extends StatelessWidget{
                 padding: const EdgeInsets.all(24),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(16),
-                  color: const Color.fromARGB(255, 112, 91, 222),
+                  color: Colors.green,
                 ),
                 child: const Text(
                   "Get Started",
                   style: TextStyle(
                     color: Colors.white,
                     // fontWeight: FontWeight.bold,
-                    fontSize: 16,
+                    fontSize: 18,
                   ),
                 ),
               ),

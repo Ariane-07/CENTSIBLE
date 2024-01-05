@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
+import 'home_page.dart';
 import '../model/cart_model.dart';
 
 class CartPage extends StatelessWidget {
@@ -9,6 +9,20 @@ class CartPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      //return home
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.black,
+        onPressed: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) {
+              return const HomePage();
+            },
+          ),
+        ),
+        child: const Icon(Icons.home),
+      ),
+      backgroundColor: const Color(0xff484646),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -37,39 +51,43 @@ class CartPage extends StatelessWidget {
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.all(12.0),
-                  child: ListView.builder(
-                    itemCount: value.cartItems.length,
-                    padding: EdgeInsets.all(12),
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: Container(
-                          decoration: BoxDecoration(
-                              color: Colors.grey[200],
-                              borderRadius: BorderRadius.circular(8)),
-                          child: ListTile(
-                            leading: Image.asset(
-                              value.cartItems[index][2],
-                              height: 36,
-                            ),
-                            title: Text(
-                              value.cartItems[index][0],
-                              style: const TextStyle(fontSize: 18),
-                            ),
-                            subtitle: Text(
-                              '\$' + value.cartItems[index][1],
-                              style: const TextStyle(fontSize: 12),
-                            ),
-                            trailing: IconButton(
-                              icon: const Icon(Icons.cancel),
-                              onPressed: () =>
-                                  Provider.of<CartModel>(context, listen: false)
-                                      .removeItemFromCart(index),
+                  child: Scrollbar(
+                    child: ListView.builder(
+                      itemCount: value.cartItems.length,
+                      padding: const EdgeInsets.all(12),
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Container(
+                            decoration: BoxDecoration(
+                                color: const Color(0xff7a7979),
+                                borderRadius: BorderRadius.circular(8)),
+                            child: ListTile(
+                              leading: Image.asset(
+                                value.cartItems[index][2],
+                                height: 36,
+                              ),
+                              title: Text(
+                                value.cartItems[index][0],
+                                style: const TextStyle(fontSize: 18),
+                              ),
+                              subtitle: Text(
+                                '\$' + value.cartItems[index][1],
+                                style: const TextStyle(
+                                    fontSize: 14,
+                                ),
+                              ),
+                              trailing: IconButton(
+                                icon: const Icon(Icons.cancel),
+                                onPressed: () =>
+                                    Provider.of<CartModel>(context, listen: false)
+                                        .removeItemFromCart(index),
+                              ),
                             ),
                           ),
-                        ),
-                      );
-                    },
+                        );
+                      },
+                    ),
                   ),
                 ),
               ),
@@ -92,7 +110,10 @@ class CartPage extends StatelessWidget {
                         children: [
                           Text(
                             'Total Price',
-                            style: TextStyle(color: Colors.green[200]),
+                            style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.green[200],
+                            ),
                           ),
 
                           const SizedBox(height: 8),
@@ -106,28 +127,6 @@ class CartPage extends StatelessWidget {
                             ),
                           ),
                         ],
-                      ),
-
-                      // pay now
-                      Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.green.shade200),
-                          borderRadius: BorderRadius.circular(28),
-                        ),
-                        padding: const EdgeInsets.all(12),
-                        child: Row(
-                          children: const [
-                            Text(
-                              'Pay Now',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            Icon(
-                              Icons.arrow_forward_ios,
-                              size: 16,
-                              color: Colors.white,
-                            ),
-                          ],
-                        ),
                       ),
                     ],
                   ),
