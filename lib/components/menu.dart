@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:groceryapp/components/my_list_tile.dart';
+import 'package:groceryapp/pages/expenses.dart';
 import 'package:groceryapp/pages/notepad_page.dart';
 import 'package:groceryapp/pages/setting_page.dart';
 
@@ -59,6 +60,20 @@ class MyDrawer extends StatelessWidget {
                   );
                 },
               ),
+              // Expense Tracker
+              MyListTile(
+                icon: Icons.assignment,
+                text: 'E X P E N S E S',
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Expenses(), // Navigate to NotepadScreen
+                    ),
+                  );
+                },
+              ),
+
               // setting page
               MyListTile(
                 icon: Icons.settings,

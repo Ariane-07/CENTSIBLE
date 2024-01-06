@@ -6,14 +6,23 @@ import 'package:groceryapp/firebase_options.dart';
 import 'package:groceryapp/model/cart_model.dart';
 import 'package:groceryapp/model/note_database.dart';
 import 'package:groceryapp/theme/theme_provider.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:provider/provider.dart';
 import 'firebase_options.dart';
+import 'model/transaction.dart';
+import 'model/transaction_gen.dart';
 
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await NoteDataBase.initialize();
+  await Hive.initFlutter();
+  Hive.registerAdapter(TransactionAdapter());
+
+  // Open the Hive box for transactions
+  await Hive.openBox<Transaction>('transactions');
 
   runApp(
     MultiProvider(
