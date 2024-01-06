@@ -1,4 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:groceryapp/components/menu.dart';
+import 'package:groceryapp/pages/profile_page.dart';
 import 'package:provider/provider.dart';
 import '../components/grocery_item_tile.dart';
 import '../model/cart_model.dart';
@@ -13,56 +16,39 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  // user
+  final currentUser = FirebaseAuth.instance.currentUser!;
+  // sign user out
+  void signOut(){
+    FirebaseAuth.instance.signOut();
+  }
+  //navigate to profile page
+  void goToProfilePage(){
+    // pop menu drawer
+    Navigator.pop(context);
+
+    // go to profile page
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => const ProfilePage()
+    ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xff484646),
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.grey[200],
         elevation: 0,
-        leading: const Padding(
-          padding: EdgeInsets.only(left: 24.0),
-          child: Icon(
-            Icons.location_on,
-            color: Colors.black,
-          ),
-        ),
-        title: const Text(
-          'Cavite, Philippines',
-          style: TextStyle(
-            fontSize: 16,
-            color: Colors.grey,
-          ),
-        ),
-        centerTitle: false,
-        actions: [
-          GestureDetector(
-            onTap: () => Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (context) {
-                  return const UserPage();
-                },
-              ),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.only(right: 24.0),
-              child: Container(
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: Colors.black,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: const Icon(
-                  Icons.person,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
 
+      ),
+      drawer: MyDrawer(
+        onProfileTap: goToProfilePage,
+        onSignOut: signOut,
+      ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.black,
         onPressed: () => Navigator.push(
@@ -79,13 +65,15 @@ class _HomePageState extends State<HomePage> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // logged in as
+
           const SizedBox(height: 48),
 
-          // good morning bro
+          // Welcome Page
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 24.0),
             child: Text(
-                'Good morning,',
+                'Welcome,',
               style: TextStyle(
                 fontSize: 16,
                 color: Colors.grey,
