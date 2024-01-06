@@ -1,9 +1,12 @@
+
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:groceryapp/auth/auth.dart';
 import 'package:groceryapp/auth/login_or_register.dart';
 import 'package:groceryapp/firebase_options.dart';
 import 'package:groceryapp/model/cart_model.dart';
+import 'package:groceryapp/model/note_database.dart';
 import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 
@@ -13,7 +16,14 @@ void main() async {
   await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const MyApp());
+  await NoteDataBase.initialize();
+
+  runApp(
+    ChangeNotifierProvider(
+        create: (context) => NoteDataBase(),
+      child: const MyApp(),
+  ),
+  );
 }
 
 class MyApp extends StatelessWidget {

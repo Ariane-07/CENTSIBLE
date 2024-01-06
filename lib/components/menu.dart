@@ -53,7 +53,7 @@ class MyDrawer extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const NotepadScreen(), // Navigate to NotepadScreen
+                      builder: (context) => const NotesPage(), // Navigate to NotepadScreen
                     ),
                   );
                 },
