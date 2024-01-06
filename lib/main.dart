@@ -5,6 +5,7 @@ import 'package:groceryapp/auth/login_or_register.dart';
 import 'package:groceryapp/firebase_options.dart';
 import 'package:groceryapp/model/cart_model.dart';
 import 'package:provider/provider.dart';
+import 'firebase_options.dart';
 
 
 void main() async {

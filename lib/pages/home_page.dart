@@ -1,7 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:groceryapp/auth/auth.dart';
 import 'package:groceryapp/components/menu.dart';
-import 'package:groceryapp/pages/profile_page.dart';
+import 'package:groceryapp/pages/notepad_page.dart';
 import 'package:provider/provider.dart';
 import '../components/grocery_item_tile.dart';
 import '../model/cart_model.dart';
@@ -9,7 +10,7 @@ import 'cart_page.dart';
 import 'user_page.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  const HomePage({Key? key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -18,21 +19,36 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   // user
   final currentUser = FirebaseAuth.instance.currentUser!;
+
   // sign user out
-  void signOut(){
-    FirebaseAuth.instance.signOut();
+  void signOut(BuildContext context) async {
+    try {
+      await FirebaseAuth.instance.signOut();
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => AuthPage(), // Navigate to your authentication page
+        ),
+      );
+    } catch (e) {
+      print('Error signing out: $e');
+      // Handle sign-out errors
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Error signing out. Please try again.'),
+        ),
+      );
+    }
   }
-  //navigate to profile page
-  void goToProfilePage(){
+
+  // navigate to developer page
+  void goToUserPage() {
     // pop menu drawer
     Navigator.pop(context);
 
-    // go to profile page
+    // go to developer page
     Navigator.push(
       context,
-      MaterialPageRoute(
-          builder: (context) => const ProfilePage()
-    ),
+      MaterialPageRoute(builder: (context) => const UserPage()),
     );
   }
 
@@ -43,11 +59,10 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         backgroundColor: Colors.grey[200],
         elevation: 0,
-
       ),
       drawer: MyDrawer(
-        onProfileTap: goToProfilePage,
-        onSignOut: signOut,
+        onProfileTap: goToUserPage,
+        onSignOut: () => signOut(context), // Invoke signOut function
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.black,

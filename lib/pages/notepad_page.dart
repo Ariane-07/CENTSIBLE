@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class ProfilePage extends StatefulWidget{
-  const ProfilePage({super.key});
+class NotepadScreen extends StatefulWidget{
+  const NotepadScreen({super.key});
 
   @override
-  State<ProfilePage> createState() => _ProfilePageState();
+  State<NotepadScreen> createState() => _NotepadScreenState();
 }
 
-class _ProfilePageState extends State<ProfilePage>{
+class _NotepadScreenState extends State<NotepadScreen>{
   @override
   Widget build(BuildContext context){
     return Scaffold(
