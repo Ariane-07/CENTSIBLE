@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:groceryapp/model/note_database.dart';
 import 'package:provider/provider.dart';
 
@@ -102,6 +103,7 @@ class _NotesPageState extends State<NotesPage> {
           elevation: 0,
         backgroundColor: Colors.transparent,
       ),
+      backgroundColor: Theme.of(context).colorScheme.background,
       floatingActionButton: FloatingActionButton(
         onPressed: createNote,
         child: const Icon(Icons.add),
@@ -111,8 +113,14 @@ class _NotesPageState extends State<NotesPage> {
         children: [
           // HEADING
           Padding(
-            padding: const EdgeInsets.all(25.0),
-            child: Text('Notes'),
+            padding: const EdgeInsets.only(left: 25.0),
+            child: Text(
+              'Notes',
+              style: GoogleFonts.dmSerifText(
+                fontSize: 48,
+                color: Theme.of(context).colorScheme.onBackground,
+              ),
+            ),
           ),
 
           // LIST OF NOTES
@@ -125,24 +133,30 @@ class _NotesPageState extends State<NotesPage> {
 
                 // list title UI
                 return ListTile(
-                  title: Text(note.text),
+                  title: Text(
+                    note.text,
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onBackground,
+                    ),
+                  ),
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
-                      children: [
-                        // edit button
-                        IconButton(
-                            onPressed: () => updateNote(note),
-                            icon: const Icon(Icons.edit),
-                        ),
+                    children: [
+                      // edit button
+                      IconButton(
+                        onPressed: () => updateNote(note),
+                        icon: const Icon(Icons.edit),
+                      ),
 
-                        // delete button
-                        IconButton(
-                          onPressed: () => deleteNote(note.id),
-                          icon: const Icon(Icons.delete),
-                        ),
-                      ],
+                      // delete button
+                      IconButton(
+                        onPressed: () => deleteNote(note.id),
+                        icon: const Icon(Icons.delete),
+                      ),
+                    ],
                   ),
                 );
+
               },
             ),
           ),

@@ -1,28 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:groceryapp/theme/theme.dart';
 
-
 class ThemeProvider with ChangeNotifier {
-  // initialy, theme is light mode
-  ThemeData _themeData = lightMode;
+  bool _isDarkMode = false;
 
-  // getter method to access the theme from other part of the code
-  ThemeData get themeData => _themeData;
+  bool get isDarkMode => _isDarkMode;
 
-  // getter method to see if we are in dark mode or not
-  bool get isDarkMode => _themeData == darkMode;
+  ThemeData get themeData => _isDarkMode ? darkMode : lightMode;
 
-  // setter metod to get the new theme
-  set themeData(ThemeData themeData) {
-    _themeData = themeData;
-    notifyListeners();
-  }
-  // toggle switch
-  void toggleTheme(){
-    if (_themeData == lightMode) {
-      themeData = darkMode;
-    } else {
-      themeData = lightMode;
-    }
+  void toggleTheme() {
+    _isDarkMode = !_isDarkMode;
+    notifyListeners(); // Notify listeners after updating the mode
   }
 }

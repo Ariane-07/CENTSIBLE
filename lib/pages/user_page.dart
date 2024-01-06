@@ -9,10 +9,10 @@ class UserPage extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //return home
       floatingActionButton: FloatingActionButton(
-          backgroundColor: Colors.black,
-          onPressed: () => Navigator.push(
+        backgroundColor: Colors.black,
+        foregroundColor: Colors.white, // Set the icon color explicitly
+        onPressed: () => Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) {
@@ -22,11 +22,10 @@ class UserPage extends StatelessWidget{
         ),
         child: const Icon(Icons.home),
       ),
-
       backgroundColor: Color(0xff484646),
       body: SafeArea(
         child: Column(
-            children: [
+          children: [
               Padding(
                 padding: const EdgeInsets.all(40),
               ),

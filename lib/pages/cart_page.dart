@@ -9,9 +9,9 @@ class CartPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //return home
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.black,
+        foregroundColor: Colors.white, // Set the icon color explicitly
         onPressed: () => Navigator.push(
           context,
           MaterialPageRoute(
@@ -26,8 +26,8 @@ class CartPage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        iconTheme: IconThemeData(
-          color: Colors.grey[800],
+        iconTheme: const IconThemeData(
+          color: Colors.grey, // Set the app bar icon color
         ),
       ),
       body: Consumer<CartModel>(

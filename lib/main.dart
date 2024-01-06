@@ -12,39 +12,42 @@ import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform,
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await NoteDataBase.initialize();
 
   runApp(
     MultiProvider(
-        providers: [
-          // Note Provider
-          ChangeNotifierProvider(create: (context) => NoteDataBase()),
+      providers: [
+        // Note Provider
+        ChangeNotifierProvider(create: (context) => NoteDataBase()),
 
-          // Theme Provider
-          ChangeNotifierProvider(create: (context) => ThemeProvider())
-          ],
-          child: const MyApp(),
-        ),
-     );
-  }
+        // Theme Provider
+        ChangeNotifierProvider(create: (context) => ThemeProvider()),
+      ],
+      child: const MyApp(),
+    ),
+  );
+}
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
+  const MyApp({Key? key});
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => CartModel(),
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: const AuthPage(),
-        theme: Provider.of<ThemeProvider>(context).themeData,
-      ),
+    return Consumer<ThemeProvider>(
+      builder: (context, themeProvider, _) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          home: const AuthPage(),
+          builder: (context, child) {
+            return ChangeNotifierProvider(
+              create: (context) => CartModel(),
+              child: child!,
+            );
+          },
+          theme: themeProvider.themeData,
+        );
+      },
     );
   }
 }
-

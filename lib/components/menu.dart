@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:groceryapp/components/my_list_tile.dart';
 import 'package:groceryapp/pages/notepad_page.dart';
+import 'package:groceryapp/pages/setting_page.dart';
 
 
 class MyDrawer extends StatelessWidget {
@@ -54,6 +55,19 @@ class MyDrawer extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (context) => const NotesPage(), // Navigate to NotepadScreen
+                    ),
+                  );
+                },
+              ),
+              // setting page
+              MyListTile(
+                icon: Icons.settings,
+                text: 'S E T T I N G S',
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const SettingsPage(), // Navigate to NotepadScreen
                     ),
                   );
                 },

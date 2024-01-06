@@ -17,21 +17,18 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  // user
   final currentUser = FirebaseAuth.instance.currentUser!;
 
-  // sign user out
   void signOut(BuildContext context) async {
     try {
       await FirebaseAuth.instance.signOut();
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
-          builder: (context) => AuthPage(), // Navigate to your authentication page
+          builder: (context) => AuthPage(),
         ),
       );
     } catch (e) {
       print('Error signing out: $e');
-      // Handle sign-out errors
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Error signing out. Please try again.'),
@@ -40,12 +37,8 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  // navigate to developer page
   void goToUserPage() {
-    // pop menu drawer
     Navigator.pop(context);
-
-    // go to developer page
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => const UserPage()),
@@ -59,13 +52,15 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         backgroundColor: Colors.grey[200],
         elevation: 0,
+        iconTheme: const IconThemeData(color: Colors.black), // Change icon color here
       ),
       drawer: MyDrawer(
         onProfileTap: goToUserPage,
-        onSignOut: () => signOut(context), // Invoke signOut function
+        onSignOut: () => signOut(context),
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.black,
+        foregroundColor: Colors.white,
         onPressed: () => Navigator.push(
           context,
           MaterialPageRoute(
@@ -76,7 +71,6 @@ class _HomePageState extends State<HomePage> {
         ),
         child: const Icon(Icons.shopping_bag),
       ),
-
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -102,7 +96,7 @@ class _HomePageState extends State<HomePage> {
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 24.0),
             child: Text(
-              "Let's order fresh items for you",
+              "Grocery Simulator",
               style: TextStyle(
                 fontSize: 36,
                 fontWeight: FontWeight.bold,
