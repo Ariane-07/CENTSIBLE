@@ -113,7 +113,7 @@ class _HomePageState extends State<HomePage> {
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 24.0),
             child: Text(
-              "Fresh Items",
+              "Add to your cart!",
               style: TextStyle(
                 //fontWeight: FontWeight.bold,
                 fontSize: 18,

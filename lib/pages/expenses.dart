@@ -16,10 +16,27 @@ class Expenses extends StatefulWidget {
 class _ExpensesState extends State<Expenses> {
   static const _color = const Color(0xff008037);
 
+  late Box<Transaction>? _transactionBox;
+  bool _isBoxOpen = false;
+
   @override
-  void dispose() {
-    Hive.close();
-    super.dispose();
+  void initState() {
+    super.initState();
+    _openTransactionBox();
+  }
+
+  Future<void> _openTransactionBox() async {
+    try {
+      _transactionBox = await Hive.openBox<Transaction>('transactions');
+      setState(() {
+        _isBoxOpen = true;
+      });
+    } catch (e) {
+      print('Error opening Hive box: $e');
+      setState(() {
+        _isBoxOpen = false;
+      });
+    }
   }
 
   @override
@@ -30,20 +47,23 @@ class _ExpensesState extends State<Expenses> {
           Scaffold(
             appBar: AppBar(
               backgroundColor: _color,
-              title: Text("Expenses"),
+              title: Text("EXPENSES"),
               centerTitle: true,
             ),
-            body: ValueListenableBuilder<Box<Transaction>>(
-              valueListenable: Hive.box<Transaction>('transactions').listenable(),
+            body: _isBoxOpen
+                ? ValueListenableBuilder<Box<Transaction>>(
+              valueListenable: _transactionBox!.listenable(),
               builder: (context, box, _) {
                 final _transactions = box.values.toList().cast<Transaction>();
                 _transactions.sort(
                       (transaction1, transaction2) =>
                       transaction2.createdDate.compareTo(transaction1.createdDate),
                 );
-
                 return _buildContents(_transactions);
               },
+            )
+                : Center(
+              child: CircularProgressIndicator(),
             ),
             floatingActionButton: FloatingActionButton(
               backgroundColor: _color,
